@@ -1,3 +1,17 @@
+# Outputs
 outputs/
+
+# Data and model files
+*.npy
+*.keras
+
+# Python
 __pycache__/
+*.pyc
 .pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.conda/
