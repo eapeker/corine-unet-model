@@ -1,0 +1,22 @@
+data:
+  images_path: path_to_your_data/np_img.npy      # (N, 256, 256, 6)
+  labels_path: path_to_your_data/np_level_2.npy  # (N, 256, 256, 15), one-hot
+
+output_dir: outputs
+
+training:
+  epochs: 200
+  batch_size: 8
+  seed: 42            # random_state for the train/test and train/validation splits
+  test_size: 0.2      # share of all patches for the test set
+  val_size: 0.2       # share of the remaining patches for the validation set
+  early_stopping_patience: 25
+
+learning_rate:
+  optimizer: 0.001        # Adam learning rate at compile time
+  schedule_initial: 5.0e-4  # LearningRateScheduler initial_learning_rate
+  warmup_epochs: 5
+  min_lr_ratio: 0.1
+  plateau_factor: 0.5     # ReduceLROnPlateau
+  plateau_patience: 10
+  min_lr: 1.0e-6
