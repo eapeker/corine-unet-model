@@ -2,38 +2,23 @@
 import tensorflow as tf
 from keras import layers, models
 import numpy as np
-import os
 import math
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from matplotlib.colors import ListedColormap
-from matplotlib.patches import Patch
-from io import BytesIO
-from tabulate import tabulate
 
 # Keras imports
-from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard, ReduceLROnPlateau
-from keras.utils import plot_model
-from keras_preprocessing.image import ImageDataGenerator
 from keras.optimizers import Adam
-from keras.losses import categorical_crossentropy
-from keras.metrics import categorical_accuracy, MeanIoU
 
 # Scikit-learn imports
 from sklearn.model_selection import train_test_split, StratifiedShuffleSplit
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
-from sklearn.metrics import precision_recall_fscore_support
-from sklearn.utils.class_weight import compute_class_weight
-
-# Other ML libraries
-from imblearn.over_sampling import SMOTE
+from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 # CORINE Level 2 classes
 corine_classes = {
     11: 'Urban fabric',
-    12: 'Industrial, comercial and transport units',
+    12: 'Industrial, commercial and transport units',
     13: 'Mine, dump and construction sites',
     14: 'Artificial, non-agricultural vegetated areas',
     21: 'Arable land',
@@ -242,12 +227,8 @@ def create_advanced_unet_model(input_shape=(256, 256, 6), num_classes=15):
 # Create and compile the model
 model = create_advanced_unet_model()
 
-optimizer = Adam(learning_rate=0.001)
-loss = categorical_crossentropy
-metrics = ['accuracy', MeanIoU(num_classes=15)]
-
 model.compile(
-    optimizer=optimizer,
+    optimizer=Adam(learning_rate=0.001),
     loss=combined_loss,
     metrics=['accuracy', custom_MeanIoU(num_classes=15)]
 )
@@ -406,11 +387,6 @@ callbacks = [
     ),
     scheduler
 ]
-
-# AdamW Optimizer
-optimizer = tf.keras.optimizers.AdamW(
-    learning_rate=5e-4, 
-    weight_decay=1e-5)
 
 
 # Model training
